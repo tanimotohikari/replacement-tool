@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>文字列をタグで囲うやつ</title>
+  <style>
+    textarea {
+      width: 50%;
+      height: 200px;
+      border: 1px solid #555;
+    }
+    .is-hide {
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>pタグを囲うやつ</h1>
+  <textarea id='js-p-tag-textarea'></textarea>
+  <button id='js-p-tag-button'>convert</button>
+  <div>
+    <output id='js-p-tag-output'></output>
+  </div>
+  <div class='is-hide'>
+    <p>jsぽfぽsだfさfだs</p><p>ふぁsdふぁそdfぴさdふぁ</p><p>dsふぁfさぢfぱそfぱぢふぁぽdふぃあぽぢあ<br>だsふぉさpdふぃあpどいふぁsdfあfだs<br>あsdfぽあふぃあdsふぃあsdf<br>fぢおあふぃぱふぁds</p><p>fdさおふぃsだふぃあおsふぃあおsdf</p>
+  </div>
+  <script>
+    const pTextarea = document.getElementById('js-p-tag-textarea');
+    const pButton = document.getElementById('js-p-tag-button');
+    const pOutput = document.getElementById('js-p-tag-output');
+
+    pButton.addEventListener('click', () => {
+      pOutput.innerHTML = pTextarea.value
+                                        .replace(/\ |\t|\　/g, '')
+                                        .split(/\r\n{2,}|\n{2,}/g)
+                                        .map((value) => {
+                                          console.log(value);
+                                            const str = value.replace(/\r\n|\n/g, '&lt;br&gt;');
+                                            return `&lt;p&gt;${str}&lt;/p&gt;`
+                                          })
+                                          .join('');
+    });
+
+  </script>
+</body>
+</html>
