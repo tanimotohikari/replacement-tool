@@ -34,14 +34,36 @@
     pButton.addEventListener('click', () => {
       pOutput.innerHTML = pTextarea.value
                                         .replace(/\ |\t|\　/g, '')
+                                        // .replace('H2.', '&lt;h2&gt;')
                                         .split(/\r\n{2,}|\n{2,}/g)
                                         .map((value) => {
-                                          console.log(value);
-                                            const str = value.replace(/\r\n|\n/g, '&lt;br&gt;');
-                                            return `&lt;p&gt;${str}&lt;/p&gt;`
+                                            let str = value;
+                                            if (str.match(/H2.?/)) {
+                                              str = str.replace(/H2./g, '')
+                                              str =  `&lt;h2&gt;${str}&lt;/h2&gt;`;
+                                            } else if (str.match(/H3.?/)) {
+                                              str = str.replace(/H3./g, '')
+                                              str =  `&lt;h3&gt;${str}&lt;/h3&gt;`;
+                                            } else {
+                                              str =  `&lt;p&gt;${str}&lt;/p&gt;`;
+                                            }
+                                            return str;
                                           })
                                           .join('');
     });
+
+    // pButton.addEventListener('click', () => {
+    //   pOutput.innerHTML = pTextarea.value
+    //                                     .replace(/\ |\t|\　/g, '')
+    //                                     .split(/\r\n{2,}|\n{2,}/g)
+    //                                     .map((value) => {
+    //                                       console.log(value);
+    //                                         const str = value.replace(/\r\n|\n/g, '&lt;br&gt;');
+    //                                         return `&lt;p&gt;${str}&lt;/p&gt;`
+    //                                       })
+    //                                       .join('');
+    // });
+    //
 
   </script>
 </body>
