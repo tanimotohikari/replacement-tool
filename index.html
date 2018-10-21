@@ -24,7 +24,12 @@
     <output id='js-p-tag-output'></output>
   </div>
   <div class='is-hide'>
-    <p>jsぽfぽsだfさfだs</p><p>ふぁsdふぁそdfぴさdふぁ</p><p>dsふぁfさぢfぱそfぱぢふぁぽdふぃあぽぢあ<br>だsふぉさpdふぃあpどいふぁsdfあfだs<br>あsdfぽあふぃあdsふぃあsdf<br>fぢおあふぃぱふぁds</p><p>fdさおふぃsだふぃあおsふぃあおsdf</p>
+    <p>H2.ほげほげほげhごえgほえ</p>
+    <p>H3.こさfkgkjglkjglj</p>
+    <p>jsぽfぽsだfさfだs</p>
+    <p>ふぁsdふぁそdfぴさdふぁ</p>
+    <p>dsふぁfさぢfぱそfぱぢふぁぽdふぃあぽぢあ<br>だsふぉさpdふぃあpどいふぁsdfあfだs<br>あsdfぽあふぃあdsふぃあsdf<br>fぢおあふぃぱふぁds</p>
+    <p>fdさおふぃsだふぃあおsふぃあおsdf</p>
   </div>
   <script>
     const pTextarea = document.getElementById('js-p-tag-textarea');
@@ -34,20 +39,21 @@
     pButton.addEventListener('click', () => {
       pOutput.innerHTML = pTextarea.value
                                         .replace(/\ |\t|\　/g, '')
-                                        // .replace('H2.', '&lt;h2&gt;')
                                         .split(/\r\n{2,}|\n{2,}/g)
                                         .map((value) => {
-                                            let str = value;
+                                            let str = value.replace(/\r\n|\n/g, '&lt;br&gt;');
                                             if (str.match(/H2.?/)) {
                                               str = str.replace(/H2./g, '')
                                               str =  `&lt;h2&gt;${str}&lt;/h2&gt;`;
+                                              str += '\n';
                                             } else if (str.match(/H3.?/)) {
                                               str = str.replace(/H3./g, '')
                                               str =  `&lt;h3&gt;${str}&lt;/h3&gt;`;
                                             } else {
                                               str =  `&lt;p&gt;${str}&lt;/p&gt;`;
+                                              //str = str.replace(/(&lt;/p&gt;)/g, "<\/p>\n");
                                             }
-                                            return str;
+                                            return str.replace(/(0x0A)/g, '\n');
                                           })
                                           .join('');
     });
