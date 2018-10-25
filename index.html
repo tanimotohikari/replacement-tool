@@ -17,11 +17,19 @@
   </style>
 </head>
 <body>
-  <h1>pタグを囲うやつ</h1>
+  <h1>タグを囲うやつ</h1>
+  <h2>pタグ囲うやつ</h2>
   <textarea id='js-p-tag-textarea'></textarea>
   <button id='js-p-tag-button'>convert</button>
   <div>
     <output id='js-p-tag-output'></output>
+  </div>
+
+  <h2>目次つくるやつ</h2>
+  <textarea id='js-toc-tag-textarea'></textarea>
+  <button id='js-toc-tag-button'>convert</button>
+  <div>
+    <output id='js-toc-tag-output'></output>
   </div>
   <div class='is-hide'>
     <p>H2.ほげほげほげhごえgほえ</p>
@@ -38,6 +46,32 @@
 
     pButton.addEventListener('click', () => {
       pOutput.innerHTML = pTextarea.value
+                                        .replace(/\ |\t|\　/g, '')
+                                        .split(/\r\n{2,}|\n{2,}/g)
+                                        .map((value) => {
+                                            let str = value.replace(/\r\n|\n/g, '&lt;br&gt;');
+                                            if (str.match(/H2.?/)) {
+                                              str = str.replace(/H2./g, '')
+                                              str =  `&lt;h2&gt;${str}&lt;/h2&gt;`;
+                                              str += '\n';
+                                            } else if (str.match(/H3.?/)) {
+                                              str = str.replace(/H3./g, '')
+                                              str =  `&lt;h3&gt;${str}&lt;/h3&gt;`;
+                                            } else {
+                                              str =  `&lt;p&gt;${str}&lt;/p&gt;`;
+                                              //str = str.replace(/(&lt;/p&gt;)/g, "<\/p>\n");
+                                            }
+                                            return str.replace(/(0x0A)/g, '\n');
+                                          })
+                                          .join('');
+    });
+
+    const tocTextarea = document.getElementById('js-toc-tag-textarea');
+    const tocButton = document.getElementById('js-toc-tag-button');
+    const tocOutput = document.getElementById('js-toc-tag-output');
+
+    tocButton.addEventListener('click', () => {
+      tocOutput.innerHTML = tocTextarea.value
                                         .replace(/\ |\t|\　/g, '')
                                         .split(/\r\n{2,}|\n{2,}/g)
                                         .map((value) => {
